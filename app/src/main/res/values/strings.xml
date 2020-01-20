@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ReignAndroidTest</string>
+    <string name="no_articles">There\'s no articles available right now</string>
+</resources>
