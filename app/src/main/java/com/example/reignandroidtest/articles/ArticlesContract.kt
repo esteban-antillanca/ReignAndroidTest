@@ -21,7 +21,9 @@ interface ArticlesContract {
 
         fun showArticleRemoved(position: Int)
 
-        fun showArticleWebView(article: Article)
+        fun showArticleWebView(url: String)
+
+        fun showArticleNoDetail()
 
     }
 

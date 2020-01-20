@@ -9,4 +9,6 @@ data class Article( @SerializedName("title") var title: String = "",
                     @SerializedName("story_title") var storyTitle: String = "",
                     @SerializedName("author") var author: String = "",
                     @SerializedName("created_at") var created: String = "",
-                    @SerializedName("story_id") var id: String = "")
+                    @SerializedName("objectID") var id: String = "",
+                    @SerializedName("story_url") var storyURL: String = "",
+                    @SerializedName("url") var URL: String = "")

@@ -5,4 +5,6 @@
     <string name="author">John Doe</string>
     <string name="created_at">Yesterday</string>
     <string name="network_error">No network connection detected. Please review your device\'s network status</string>
+    <string name="no_detail_available">There\'s no details available for this article</string>
+    <string name="no_detail_offline">Article detail not available in offline mode</string>
 </resources>

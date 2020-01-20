@@ -1,13 +1,11 @@
 package com.example.reignandroidtest.articles
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.reignandroidtest.R
+import com.example.reignandroidtest.articleDetail.ArticleDetailActivity
 import com.google.android.material.snackbar.Snackbar
 import java.util.ArrayList
 
@@ -81,7 +80,7 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
         noArticles.isVisible = false
         swipeRefreshLayout.isVisible = true
         listAdapter.clear()
-        listAdapter.articles =articles.toMutableList()
+        listAdapter.setData(articles.toMutableList())
         listAdapter.notifyDataSetChanged()
     }
 
@@ -98,13 +97,21 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
 
     override fun showArticleRemoved(position: Int) {
         listAdapter.deleteAt(position)
-     //   listAdapter.viewBindHelper.closeLayout(listAdapter.getItem(position).id)
+        listAdapter.viewBindHelper.closeLayout(listAdapter.getItem(position).id)
         listAdapter.notifyItemRemoved(position)
         listAdapter.notifyItemRangeChanged(position, listAdapter.articles.count());
     }
 
-    override fun showArticleWebView(article: Article) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showArticleWebView(url: String) {
+        val intent = Intent(context, ArticleDetailActivity::class.java).apply{
+            putExtra(ArticleDetailActivity.EXTRA_ARTICLE_URL, url)
+        }
+        startActivity(intent)
+    }
+
+    override fun showArticleNoDetail() {
+        Snackbar.make(root, getString(R.string.no_detail_available),Snackbar.LENGTH_LONG).show()
+
     }
 
     companion object {
@@ -115,6 +122,11 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
    inner class ArticlesAdapter (var articles: MutableList<Article>) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
 
        val viewBindHelper = ViewBinderHelper()
+
+       init {
+           viewBindHelper.setOpenOnlyOne(true)
+
+       }
 
         override fun getItemCount(): Int {
             return articles.size
@@ -161,6 +173,7 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
             private var mCreatedAt: TextView? = null
             var swipeRevealLayout: SwipeRevealLayout? = null
             var delete : ImageView? = null
+            var container: FrameLayout? = null
 
             init{
                 mTitle = itemView.findViewById(R.id.item_text_desc)
@@ -168,16 +181,19 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
                 mCreatedAt = itemView.findViewById(R.id.item_text_createdAt)
                 swipeRevealLayout = itemView.findViewById(R.id.swipe_reveal_layout)
                 delete = itemView.findViewById(R.id.delete_article)
+                container = itemView.findViewById(R.id.article_item_container)
 
             }
 
             fun bind(item: Article, position: Int) {
                 mTitle?.text = item.title
-                if (item.title == null || item.title == "") mTitle?.text = item.storyTitle
                 mAuthor?.text = item.author
                 mCreatedAt?.text = item.created
-                delete?.setOnClickListener { v -> presenter.deleteArticle(item, position)
-                }
+
+                container?.setOnClickListener { _ -> presenter.openArticleDetail(item) }
+
+                delete?.setOnClickListener { _ -> presenter.deleteArticle(item, position) }
+
 
             }
         }

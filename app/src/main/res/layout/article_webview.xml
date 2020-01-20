@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".articles.ArticlesActivity">
 
-    <FrameLayout
-        android:id="@+id/contentFrame"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        >
+
+    <ProgressBar
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/wv_pb"
+        android:visibility="visible"
+        />
+
+    <WebView
+        android:id="@+id/article_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

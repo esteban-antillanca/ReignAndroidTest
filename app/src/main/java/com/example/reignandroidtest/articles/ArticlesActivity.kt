@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.reignandroidtest.R
 import com.example.reignandroidtest.data.ArticleRemoteDataSource
 import com.example.reignandroidtest.util.replaceFragmentInActivity
-import com.example.reignandroidtest.util.setupActionBar
 
 /**
  * Created by Esteban Antillanca on 2020-01-18.

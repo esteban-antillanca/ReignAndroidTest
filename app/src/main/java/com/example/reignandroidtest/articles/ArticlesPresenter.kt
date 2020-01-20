@@ -8,6 +8,8 @@ import com.example.reignandroidtest.data.ArticleDataSource
  */
 class ArticlesPresenter(private val dataSource: ArticleDataSource, val view: ArticlesContract.View) : ArticlesContract.Presenter {
 
+    private var firstLoad = true
+
     override fun loadArticles(showLoadingUI: Boolean) {
 
         if (showLoadingUI){
@@ -27,6 +29,9 @@ class ArticlesPresenter(private val dataSource: ArticleDataSource, val view: Art
                     view.showNoArticles()
                 }else{
                     //TODO filter deleted articles
+                    for (article in articles){
+                        if (article.title == null || article.title.equals("")) article.title = article.storyTitle
+                    }
                     view.showArticles(articles)
                 }
 
@@ -47,10 +52,24 @@ class ArticlesPresenter(private val dataSource: ArticleDataSource, val view: Art
     }
 
     override fun openArticleDetail(article: Article) {
-        view.showArticleWebView(article)
+
+        if (article.URL == null){
+            if(article.storyURL == null)
+            {
+                view.showArticleNoDetail()
+
+            }else{
+                view.showArticleWebView(article.storyURL)
+            }
+            return
+        }
+        view.showArticleWebView(article.URL)
     }
 
     override fun start() {
-        loadArticles(showLoadingUI = true)
+        if (firstLoad) {
+            loadArticles(showLoadingUI = true)
+            firstLoad = false
+        }
     }
 }
