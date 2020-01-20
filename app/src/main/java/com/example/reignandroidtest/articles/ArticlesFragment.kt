@@ -97,7 +97,6 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
 
     override fun showArticleRemoved(position: Int) {
         listAdapter.deleteAt(position)
-        listAdapter.viewBindHelper.closeLayout(listAdapter.getItem(position).id)
         listAdapter.notifyItemRemoved(position)
         listAdapter.notifyItemRangeChanged(position, listAdapter.articles.count());
     }
@@ -112,6 +111,10 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
     override fun showArticleNoDetail() {
         Snackbar.make(root, getString(R.string.no_detail_available),Snackbar.LENGTH_LONG).show()
 
+    }
+
+    override fun showArticleNotAvailableOffline() {
+        Snackbar.make(root, getString(R.string.no_detail_offline),Snackbar.LENGTH_LONG).show()
     }
 
     companion object {
@@ -133,7 +136,7 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
         }
 
         fun getItem(position: Int): Article {
-           return articles.get(position)
+           return articles[position]
        }
 
         fun setData(articles: MutableList<Article>){

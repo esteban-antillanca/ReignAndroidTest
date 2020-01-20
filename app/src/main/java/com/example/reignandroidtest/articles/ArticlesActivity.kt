@@ -3,7 +3,7 @@ package com.example.reignandroidtest.articles
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.reignandroidtest.R
-import com.example.reignandroidtest.data.ArticleRemoteDataSource
+import com.example.reignandroidtest.data.ArticleDataSource
 import com.example.reignandroidtest.util.replaceFragmentInActivity
 
 /**
@@ -20,7 +20,7 @@ class ArticlesActivity : AppCompatActivity() {
             as ArticlesFragment? ?: ArticlesFragment.newInstance().also {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
-        var articlesPresenter = ArticlesPresenter(view = articlesFragment , dataSource = ArticleRemoteDataSource())
+        var articlesPresenter = ArticlesPresenter(view = articlesFragment , dataSource = ArticleDataSource(applicationContext))
         articlesFragment.presenter = articlesPresenter
     }
 

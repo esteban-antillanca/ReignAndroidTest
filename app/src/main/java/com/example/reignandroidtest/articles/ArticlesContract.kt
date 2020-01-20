@@ -25,6 +25,8 @@ interface ArticlesContract {
 
         fun showArticleNoDetail()
 
+        fun showArticleNotAvailableOffline()
+
     }
 
     interface Presenter : BasePresenter {
