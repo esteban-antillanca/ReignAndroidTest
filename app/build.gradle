@@ -38,6 +38,8 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.7.1"
     implementation "com.squareup.retrofit2:converter-gson:2.7.1"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

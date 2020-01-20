@@ -9,18 +9,24 @@ import retrofit2.Response
  */
 class ArticleRemoteDataSource : ArticleDataSource {
     override fun deleteArticle(article: Article) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO esto falta
     }
 
     override fun getArticles(callback: ArticleDataSource.LoadArticleCallback) {
 
-        val call : Call<List<Article>> = RetrofitInstance().getRetrofit().create(APIService::class.java).getArticles()
-        call.enqueue(object : Callback<List<Article>> {
-            override fun onResponse(call: Call<List<Article>>, response: Response<List<Article>>) {
-                response.body()?.let { callback.onArticlesLoaded(it) }
+
+        val call : Call<APIResponse> = RetrofitInstance().getRetrofit().create(APIService::class.java).getArticles("api/v1/search_by_date?query=android")
+        call.enqueue(object : Callback<APIResponse> {
+            override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
+
+                response.body()?.let { response.body()?.articles?.let { it1 ->
+                    callback.onArticlesLoaded(
+                        it1
+                    )
+                } }
             }
 
-            override fun onFailure(call: Call<List<Article>>, t: Throwable) {
+            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                 callback.onDataNotAvailable()
             }
 

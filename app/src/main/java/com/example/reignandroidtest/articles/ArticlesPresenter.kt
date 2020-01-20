@@ -9,7 +9,7 @@ import com.example.reignandroidtest.data.ArticleDataSource
 class ArticlesPresenter(private val dataSource: ArticleDataSource, val view: ArticlesContract.View) : ArticlesContract.Presenter {
 
     override fun loadArticles(showLoadingUI: Boolean) {
-        return
+
         if (showLoadingUI){
             view.setLoadingIndicator(true)
         }
@@ -17,13 +17,13 @@ class ArticlesPresenter(private val dataSource: ArticleDataSource, val view: Art
         dataSource.getArticles(object : ArticleDataSource.LoadArticleCallback {
             override fun onArticlesLoaded(articles: List<Article>) {
 
-                val articles = ArrayList<Article>()
+
 
                 if (showLoadingUI){
                    view.setLoadingIndicator(false)
                }
 
-                if (articles.size == 0){
+                if (articles.isEmpty()){
                     view.showNoArticles()
                 }else{
                     //TODO filter deleted articles
@@ -40,9 +40,10 @@ class ArticlesPresenter(private val dataSource: ArticleDataSource, val view: Art
         } )
     }
 
-    override fun deleteArticle(article: Article) {
+    override fun deleteArticle(article: Article, position : Int) {
 
         dataSource.deleteArticle(article)
+        view.showArticleRemoved(position)
     }
 
     override fun openArticleDetail(article: Article) {

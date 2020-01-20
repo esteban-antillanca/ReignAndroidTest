@@ -9,5 +9,5 @@ import retrofit2.http.Url
  */
 interface APIService {
     @GET
-    fun getArticles(): Call<List<Article>>
+    fun getArticles(@Url url:String): Call<APIResponse>
 }

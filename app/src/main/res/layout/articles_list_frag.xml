@@ -3,8 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".articles.ArticlesActivity">
+
+    <ProgressBar
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:id="@+id/view_progress_bar"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
@@ -25,11 +31,11 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <RelativeLayout
-        android:id="@+id/no_counters_l"
+        android:id="@+id/no_articles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="gone"
+        tools:visibility="visible"
         >
 
         <ImageView
@@ -44,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/no_articles"
-            android:textColor="@color/primary_dark"
+            android:textColor="@color/grey_900"
             android:layout_below="@+id/no_counters_img"/>
     </RelativeLayout>
 </RelativeLayout>

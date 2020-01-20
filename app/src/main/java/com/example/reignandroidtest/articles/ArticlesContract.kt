@@ -29,7 +29,7 @@ interface ArticlesContract {
 
         fun loadArticles(showLoadingUI : Boolean)
 
-        fun deleteArticle(article: Article)
+        fun deleteArticle(article: Article, position: Int)
 
         fun openArticleDetail(article: Article)
 

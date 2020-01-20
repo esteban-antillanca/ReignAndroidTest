@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ReignAndroidTest</string>
     <string name="no_articles">There\'s no articles available right now</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
+    <string name="author">John Doe</string>
+    <string name="created_at">Yesterday</string>
+    <string name="network_error">No network connection detected. Please review your device\'s network status</string>
 </resources>
