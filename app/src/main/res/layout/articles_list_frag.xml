@@ -5,12 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".articles.ArticlesActivity">
 
-    <ProgressBar
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:id="@+id/view_progress_bar"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
@@ -19,38 +13,46 @@
         android:visibility="visible"
         android:layout_alignParentTop="true"
         >
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/articles_list"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:clickable="true"
+            android:clickable="true">
 
-            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/articles_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                tools:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/no_articles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/no_counters_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/cherry_list_is_empty_1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/no_counters_img"
+                    android:layout_centerInParent="true"
+                    android:text="@string/no_articles"
+                    android:textColor="@color/grey_900" />
+            </RelativeLayout>
+        </RelativeLayout>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <RelativeLayout
-        android:id="@+id/no_articles"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="visible"
-        >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cherry_list_is_empty_1"
-            android:layout_centerInParent="true"
-            android:id="@+id/no_counters_img"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/no_articles"
-            android:textColor="@color/grey_900"
-            android:layout_below="@+id/no_counters_img"/>
-    </RelativeLayout>
 </RelativeLayout>

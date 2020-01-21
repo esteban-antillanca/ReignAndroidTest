@@ -67,7 +67,7 @@
         android:id="@+id/item_separator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="-"
+        android:text="-"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/item_author"
         android:layout_marginStart="5dp"

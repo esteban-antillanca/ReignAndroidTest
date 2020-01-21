@@ -2,6 +2,10 @@ package com.example.reignandroidtest.articles
 
 import com.example.reignandroidtest.data.Article
 import com.example.reignandroidtest.data.ArticleDataSourceContract
+import com.example.reignandroidtest.util.UnixToHuman
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Esteban Antillanca on 2020-01-18.
@@ -9,6 +13,7 @@ import com.example.reignandroidtest.data.ArticleDataSourceContract
 class ArticlesPresenter(private val dataSource: ArticleDataSourceContract, val view: ArticlesContract.View) : ArticlesContract.Presenter {
 
     private var firstLoad = true
+    private var sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").apply{timeZone = TimeZone.getTimeZone("GMT")}
 
     override fun loadArticles(showLoadingUI: Boolean) {
 
@@ -37,6 +42,8 @@ class ArticlesPresenter(private val dataSource: ArticleDataSourceContract, val v
 
                     for (article in filteredArticles){
                         if (article.title == null || article.title.equals("")) article.title = article.storyTitle
+
+                        article.prettyDate = UnixToHuman.getTimeAgo(sdf.parse(article.created).time)
                     }
                     view.showArticles(filteredArticles)
                 }

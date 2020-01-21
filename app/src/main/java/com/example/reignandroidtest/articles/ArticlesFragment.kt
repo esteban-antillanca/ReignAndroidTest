@@ -30,13 +30,13 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
 
     private val listAdapter = ArticlesAdapter(ArrayList(0))
 
-    lateinit var viewSpinner : ProgressBar
-
     lateinit var root : View
 
     lateinit var noArticles : RelativeLayout
 
     lateinit var swipeRefreshLayout : SwipeRefreshLayout
+
+    lateinit var listView : RecyclerView
 
 
     override fun onResume() {
@@ -50,9 +50,8 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
 
         with(root){
 
-            viewSpinner = findViewById(R.id.view_progress_bar)
             noArticles = findViewById(R.id.no_articles)
-            val listView = findViewById<RecyclerView>(R.id.articles_list)
+            listView = findViewById(R.id.articles_list)
             listView.layoutManager = LinearLayoutManager(context)
             val dividerItemDec = DividerItemDecoration(listView.context, LinearLayoutManager(context).orientation)
             listView.addItemDecoration(dividerItemDec)
@@ -78,7 +77,7 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
 
     override fun showArticles(articles: List<Article>) {
         noArticles.isVisible = false
-        swipeRefreshLayout.isVisible = true
+        listView.isVisible = true
         listAdapter.clear()
         listAdapter.setData(articles.toMutableList())
         listAdapter.notifyDataSetChanged()
@@ -91,7 +90,7 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
 
     override fun showNoArticles() {
         noArticles.isVisible = true
-        swipeRefreshLayout.isVisible = false
+        listView.isVisible = false
         setLoadingIndicator(false)
     }
 
@@ -191,7 +190,7 @@ class ArticlesFragment : Fragment(), ArticlesContract.View {
             fun bind(item: Article, position: Int) {
                 mTitle?.text = item.title
                 mAuthor?.text = item.author
-                mCreatedAt?.text = item.created
+                mCreatedAt?.text = item.prettyDate
 
                 container?.setOnClickListener { _ -> presenter.openArticleDetail(item) }
 
