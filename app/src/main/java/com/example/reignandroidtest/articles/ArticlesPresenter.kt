@@ -1,11 +1,14 @@
 package com.example.reignandroidtest.articles
 
+import android.util.Patterns
 import com.example.reignandroidtest.data.Article
 import com.example.reignandroidtest.data.ArticleDataSourceContract
 import com.example.reignandroidtest.util.UnixToHuman
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
+
 
 /**
  * Created by Esteban Antillanca on 2020-01-18.
@@ -44,6 +47,7 @@ class ArticlesPresenter(private val dataSource: ArticleDataSourceContract, val v
                         if (article.title == null || article.title.equals("")) article.title = article.storyTitle
 
                         article.prettyDate = UnixToHuman.getTimeAgo(sdf.parse(article.created).time)
+
                     }
                     view.showArticles(filteredArticles)
                 }
@@ -95,11 +99,12 @@ class ArticlesPresenter(private val dataSource: ArticleDataSourceContract, val v
                 view.showArticleNoDetail()
 
             }else{
-                view.showArticleWebView(article.storyURL)
+
+                extractUrls(article.storyURL)?.get(0)?.let { view.showArticleWebView(it) }
             }
             return
         }
-        view.showArticleWebView(article.URL)
+        extractUrls(article.URL)?.get(0)?.let { view.showArticleWebView(it) }
     }
 
     override fun start() {
@@ -107,5 +112,20 @@ class ArticlesPresenter(private val dataSource: ArticleDataSourceContract, val v
             loadArticles(showLoadingUI = true)
             firstLoad = false
         }
+    }
+
+    fun extractUrls(input: String): List<String>? {
+        val result: MutableList<String> = ArrayList()
+        val words = input.split("\\s+").toTypedArray()
+        val pattern: Pattern = Patterns.WEB_URL
+        for (word in words) {
+            if (pattern.matcher(word).find()) {
+                if (!word.toLowerCase().contains("http://") && !word.toLowerCase().contains("https://")) {
+                    val word = "http://$word"
+                }
+                result.add(word)
+            }
+        }
+        return result
     }
 }
